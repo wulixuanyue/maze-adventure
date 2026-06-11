@@ -67,6 +67,10 @@ class MazeGenerator {
         // 随机放置星星（收集品）
         const stars = this._placeStars(cells, w, h, 3);
 
+        // 定义终点位置（右下角）
+        const endX = w - 1;
+        const endY = h - 1;
+
         return {
             width: w,
             height: h,
