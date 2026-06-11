@@ -277,19 +277,19 @@ class MazeGame {
         const reachable = this.mazeGen.getReachableCells(maze.cells, maze.width, maze.height);
         
         // 绘制通道（浅色，可进入）
-        ctx.fillStyle = '#334155'; // 通道颜色比墙壁浅
+        ctx.fillStyle = '#374151'; // 通道颜色比墙壁浅
         for (const pos of reachable) {
             const px = pos.x * cs;
             const py = pos.y * cs;
             ctx.fillRect(px, py, cs, cs);
         }
         
-        // 绘制墙壁（粗线条，不可进入）
-        ctx.strokeStyle = '#0f172a';
-        ctx.lineWidth = 4;
+        // 绘制墙壁边框（粗线条，不可进入）
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 5;
         ctx.lineCap = 'square';
         
-        // 只在可达区域周围绘制墙壁
+        // 只在可达区域周围绘制墙壁边框
         for (const pos of reachable) {
             const x = pos.x;
             const y = pos.y;
@@ -319,7 +319,7 @@ class MazeGame {
         }
         
         // 添加通道网格线（细线条）
-        ctx.strokeStyle = '#1e293b';
+        ctx.strokeStyle = '#4b5563';
         ctx.lineWidth = 1;
         for (const pos of reachable) {
             const px = pos.x * cs;

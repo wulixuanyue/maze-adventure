@@ -71,6 +71,14 @@ class MazeGenerator {
         if (reachable.length < w * h) {
             return this.generate(width, height);
         }
+        
+        // 确保终点可达
+        const endX = w - 1;
+        const endY = h - 1;
+        const endReachable = reachable.some(pos => pos.x === endX && pos.y === endY);
+        if (!endReachable) {
+            return this.generate(width, height);
+        }
 
         // 随机放置星星（收集品）
         const stars = this._placeStars(cells, w, h, 3);
