@@ -270,99 +270,62 @@ class MazeGame {
         const ctx = this.offscreenCtx;
         
         // 先填充整个画布为墙壁颜色（深色，不可进入）
-        ctx.fillStyle = '#1e293b';
+        ctx.fillStyle = '#0f172a';
         ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         // 使用BFS找到所有可达的通道格子
-        const reachable = this._getReachableCells(maze);
+        const reachable = this.mazeGen.getReachableCells(maze.cells, maze.width, maze.height);
         
         // 绘制通道（浅色，可进入）
-        ctx.fillStyle = '#374151'; // 通道颜色比墙壁浅
+        ctx.fillStyle = '#334155'; // 通道颜色比墙壁浅
         for (const pos of reachable) {
             const px = pos.x * cs;
             const py = pos.y * cs;
             ctx.fillRect(px, py, cs, cs);
         }
         
-        // 绘制墙壁线条（粗线条）
+        // 绘制墙壁（粗线条，不可进入）
         ctx.strokeStyle = '#0f172a';
         ctx.lineWidth = 4;
         ctx.lineCap = 'square';
         
-        for (let y = 0; y < maze.height; y++) {
-            for (let x = 0; x < maze.width; x++) {
-                const idx = y * maze.width + x;
-                const cell = maze.cells[idx];
-                const px = x * cs;
-                const py = y * cs;
-                
-                ctx.beginPath();
-                if (cell & 1) { // 上墙
-                    ctx.moveTo(px, py);
-                    ctx.lineTo(px + cs, py);
-                }
-                if (cell & 2) { // 右墙
-                    ctx.moveTo(px + cs, py);
-                    ctx.lineTo(px + cs, py + cs);
-                }
-                if (cell & 4) { // 下墙
-                    ctx.moveTo(px, py + cs);
-                    ctx.lineTo(px + cs, py + cs);
-                }
-                if (cell & 8) { // 左墙
-                    ctx.moveTo(px, py);
-                    ctx.lineTo(px, py + cs);
-                }
-                ctx.stroke();
+        // 只在可达区域周围绘制墙壁
+        for (const pos of reachable) {
+            const x = pos.x;
+            const y = pos.y;
+            const idx = y * maze.width + x;
+            const cell = maze.cells[idx];
+            const px = x * cs;
+            const py = y * cs;
+            
+            ctx.beginPath();
+            if (cell & 1) { // 上墙
+                ctx.moveTo(px, py);
+                ctx.lineTo(px + cs, py);
             }
+            if (cell & 2) { // 右墙
+                ctx.moveTo(px + cs, py);
+                ctx.lineTo(px + cs, py + cs);
+            }
+            if (cell & 4) { // 下墙
+                ctx.moveTo(px, py + cs);
+                ctx.lineTo(px + cs, py + cs);
+            }
+            if (cell & 8) { // 左墙
+                ctx.moveTo(px, py);
+                ctx.lineTo(px, py + cs);
+            }
+            ctx.stroke();
         }
         
         // 添加通道网格线（细线条）
-        ctx.strokeStyle = '#4b5563';
+        ctx.strokeStyle = '#1e293b';
         ctx.lineWidth = 1;
         for (const pos of reachable) {
             const px = pos.x * cs;
             const py = pos.y * cs;
             ctx.strokeRect(px, py, cs, cs);
         }
-    }
-    
-    // 使用BFS获取所有可达的单元格
-    _getReachableCells(maze) {
-        const w = maze.width;
-        const h = maze.height;
-        const reachable = [];
-        const visited = new Uint8Array(w * h);
-        const queue = [{ x: 0, y: 0 }];
-        visited[0] = 1;
-        
-        while (queue.length > 0) {
-            const { x, y } = queue.shift();
-            reachable.push({ x, y });
-            
-            // 上
-            if (!(maze.cells[y * w + x] & 1) && y > 0 && !visited[(y - 1) * w + x]) {
-                visited[(y - 1) * w + x] = 1;
-                queue.push({ x, y: y - 1 });
-            }
-            // 右
-            if (!(maze.cells[y * w + x] & 2) && x < w - 1 && !visited[y * w + x + 1]) {
-                visited[y * w + x + 1] = 1;
-                queue.push({ x: x + 1, y });
-            }
-            // 下
-            if (!(maze.cells[y * w + x] & 4) && y < h - 1 && !visited[(y + 1) * w + x]) {
-                visited[(y + 1) * w + x] = 1;
-                queue.push({ x, y: y + 1 });
-            }
-            // 左
-            if (!(maze.cells[y * w + x] & 8) && x > 0 && !visited[y * w + x - 1]) {
-                visited[y * w + x - 1] = 1;
-                queue.push({ x: x - 1, y });
-            }
-        }
-        
-        return reachable;
     }
 
     // 开始计时
