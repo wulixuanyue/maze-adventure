@@ -89,30 +89,40 @@ class MazeGame {
 
     // 设置事件监听
     setupEventListeners() {
+        // 安全添加事件监听器的辅助函数
+        const addEvent = (id, event, handler) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener(event, handler);
+            } else {
+                console.warn(`Element ${id} not found`);
+            }
+        };
+
         // 键盘控制
         document.addEventListener('keydown', (e) => this.handleKeyDown(e));
 
         // 按钮事件
-        document.getElementById('btn-start').addEventListener('click', () => this.startGame());
-        document.getElementById('btn-leaderboard').addEventListener('click', () => this.showLeaderboard());
-        document.getElementById('btn-achievements').addEventListener('click', () => this.showAchievements());
-        document.getElementById('btn-about').addEventListener('click', () => this.openAbout());
-        document.getElementById('btn-tutorial-ok').addEventListener('click', () => this.closeTutorial());
-        document.getElementById('btn-pause').addEventListener('click', () => this.pauseGame());
-        document.getElementById('btn-resume').addEventListener('click', () => this.resumeGame());
-        document.getElementById('btn-pause-restart').addEventListener('click', () => this.restartLevel());
-        document.getElementById('btn-pause-menu').addEventListener('click', () => this.backToMenu());
-        document.getElementById('btn-pause-about').addEventListener('click', () => this.openAbout());
-        document.getElementById('btn-restart-level').addEventListener('click', () => this.restartLevel());
-        document.getElementById('btn-back-menu').addEventListener('click', () => this.backToMenu());
-        document.getElementById('btn-next-level').addEventListener('click', () => this.nextLevel());
-        document.getElementById('btn-share').addEventListener('click', () => this.shareScore());
-        document.getElementById('btn-complete-menu').addEventListener('click', () => this.backToMenu());
-        document.getElementById('btn-clear-leaderboard').addEventListener('click', () => this.clearLeaderboard());
-        document.getElementById('btn-leaderboard-back').addEventListener('click', () => this.backFromLeaderboard());
-        document.getElementById('btn-achievements-back').addEventListener('click', () => this.backFromAchievements());
-        document.getElementById('btn-copy-share').addEventListener('click', () => this.copyShareText());
-        document.getElementById('btn-close-share').addEventListener('click', () => this.closeShare());
+        addEvent('btn-start', 'click', () => this.startGame());
+        addEvent('btn-leaderboard', 'click', () => this.showLeaderboard());
+        addEvent('btn-achievements', 'click', () => this.showAchievements());
+        addEvent('btn-about', 'click', () => this.openAbout());
+        addEvent('btn-tutorial-ok', 'click', () => this.closeTutorial());
+        addEvent('btn-pause', 'click', () => this.pauseGame());
+        addEvent('btn-resume', 'click', () => this.resumeGame());
+        addEvent('btn-pause-restart', 'click', () => this.restartLevel());
+        addEvent('btn-pause-menu', 'click', () => this.backToMenu());
+        addEvent('btn-pause-about', 'click', () => this.openAbout());
+        addEvent('btn-restart-level', 'click', () => this.restartLevel());
+        addEvent('btn-back-menu', 'click', () => this.backToMenu());
+        addEvent('btn-next-level', 'click', () => this.nextLevel());
+        addEvent('btn-share', 'click', () => this.shareScore());
+        addEvent('btn-complete-menu', 'click', () => this.backToMenu());
+        addEvent('btn-clear-leaderboard', 'click', () => this.clearLeaderboard());
+        addEvent('btn-leaderboard-back', 'click', () => this.backFromLeaderboard());
+        addEvent('btn-achievements-back', 'click', () => this.backFromAchievements());
+        addEvent('btn-copy-share', 'click', () => this.copyShareText());
+        addEvent('btn-close-share', 'click', () => this.closeShare());
 
         // 排行榜标签切换
         document.querySelectorAll('.leaderboard-tabs .tab-btn').forEach(btn => {
