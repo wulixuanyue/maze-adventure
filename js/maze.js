@@ -138,9 +138,9 @@ class MazeGenerator {
     }
 
     /**
-     * 使用BFS获取所有可达的单元格（公共方法）
+     * 使用BFS获取所有可达的单元格
      */
-    getReachableCells(cells, w, h) {
+    _getReachableCells(cells, w, h) {
         const reachable = [];
         const visited = new Uint8Array(w * h);
         const queue = [{ x: 0, y: 0 }];
@@ -166,6 +166,13 @@ class MazeGenerator {
         }
 
         return reachable;
+    }
+    
+    /**
+     * 使用BFS获取所有可达的单元格（公共方法）
+     */
+    getReachableCells(cells, w, h) {
+        return this._getReachableCells(cells, w, h);
     }
 
     /**
