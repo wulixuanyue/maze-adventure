@@ -57,6 +57,11 @@ class MazeGame {
             { id: 'master', name: '迷宫大师', desc: '通关全部5关', icon: '👑', condition: (s) => s.level > 5 },
             { id: 'perfect', name: '完美挑战', desc: '不收集星星直接通关', icon: '🎯', condition: (s) => s.stars === 0 && s.won }
         ];
+        
+        // 初始化数据
+        this.leaderboard = [];
+        this.achievements = {};
+        this.settings = { skipTutorial: false };
 
         this.init();
     }
