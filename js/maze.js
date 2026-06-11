@@ -64,28 +64,8 @@ class MazeGenerator {
             }
         }
 
-        // 验证迷宫是否完美（所有单元格都可达）
-        const reachable = this._getReachableCells(cells, w, h);
-        
-        // 如果有不可达的单元格，重新生成
-        if (reachable.length < w * h) {
-            return this.generate(width, height);
-        }
-        
-        // 确保终点可达
-        const endX = w - 1;
-        const endY = h - 1;
-        const endReachable = reachable.some(pos => pos.x === endX && pos.y === endY);
-        if (!endReachable) {
-            return this.generate(width, height);
-        }
-
         // 随机放置星星（收集品）
         const stars = this._placeStars(cells, w, h, 3);
-
-        // 确保出口可达（使用BFS验证）
-        const endX = w - 1;
-        const endY = h - 1;
 
         return {
             width: w,
