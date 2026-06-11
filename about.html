@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我 - 蔡雅婷 | 迷宫冒险</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --primary: #2563eb;
+            --gold: #fbbf24;
+            --success: #059669;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            margin: 0 auto 16px;
+            border: 4px solid var(--gold);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .profile-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 4px;
+        }
+
+        .profile-header .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .profile-header .bio {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .section-card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .contact-link:hover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            padding: 6px 14px;
+            background: rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #93c5fd;
+            transition: all 0.2s;
+        }
+
+        .skill-tag:hover {
+            background: rgba(37, 99, 235, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .project-card {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .project-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .project-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            color: var(--gold);
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .project-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .feature-tag {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            background: rgba(5, 150, 105, 0.15);
+            border: 1px solid rgba(5, 150, 105, 0.3);
+            border-radius: 6px;
+            color: #6ee7b7;
+        }
+
+        .project-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .education-item {
+            padding: 16px;
+            background: var(--bg);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .education-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .edu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+
+        .edu-school {
+            font-weight: 600;
+        }
+
+        .edu-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .edu-major {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .edu-courses {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .campus-item {
+            padding: 16px;
+            background: var(--bg);
+            border-radius: 8px;
+            border-left: 3px solid #8b5cf6;
+        }
+
+        .campus-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .campus-name {
+            font-weight: 600;
+        }
+
+        .campus-role {
+            font-size: 0.85rem;
+            color: #a78bfa;
+        }
+
+        .campus-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .campus-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .awards-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .awards-list li {
+            position: relative;
+            padding-left: 20px;
+            padding-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .awards-list li:last-child {
+            padding-bottom: 0;
+        }
+
+        .awards-list li::before {
+            content: "🏆";
+            position: absolute;
+            left: 0;
+            font-size: 0.85rem;
+        }
+
+        .game-showcase {
+            text-align: center;
+            padding: 36px 24px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 12px;
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            animation: bounce 2s infinite;
+        }
+
+        .game-showcase h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .game-showcase p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .game-features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .game-feature {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .navbar {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .nav-links a {
+                margin: 0 10px;
+            }
+            .project-header {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .project-meta {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">🎮 迷宫冒险</a>
+        <div class="nav-links">
+            <a href="index.html">返回游戏</a>
+            <a href="https://github.com/wulixuanyue/maze-adventure" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="avatar">👩‍💻</div>
+            <h1>蔡雅婷</h1>
+            <p class="subtitle">前端开发实习生 | 软件技术专业在读</p>
+            <p class="bio">热爱前端技术，具备良好的自学能力和团队协作精神。喜欢通过实践不断提升技术能力，致力于成为一名优秀的前端开发工程师。</p>
+        </div>
+
+        <div class="section-card">
+            <h2>📋 个人信息</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">性别</span>
+                    <span class="info-value">女</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">民族</span>
+                    <span class="info-value">汉族</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">出生年月</span>
+                    <span class="info-value">2005年10月</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">政治面貌</span>
+                    <span class="info-value">共青团员</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">最高学历</span>
+                    <span class="info-value">高中</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">在读院校</span>
+                    <span class="info-value">福州软件职业技术学院</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">所学专业</span>
+                    <span class="info-value">软件技术</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">现居地</span>
+                    <span class="info-value">福建福州</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>📞 联系方式</h2>
+            <div class="contact-links">
+                <a href="tel:18750525007" class="contact-link">📱 18750525007</a>
+                <a href="mailto:2119369625@qq.com" class="contact-link">✉️ 2119369625@qq.com</a>
+                <a href="https://github.com/yating-cai" target="_blank" class="contact-link">🐙 GitHub</a>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>🛠️ 技能标签</h2>
+            <div class="skills">
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">Vue3</span>
+                <span class="skill-tag">Vite</span>
+                <span class="skill-tag">Pinia</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">响应式设计</span>
+                <span class="skill-tag">UI设计</span>
+                <span class="skill-tag">Canvas</span>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>📚 教育背景</h2>
+            <div class="education-item">
+                <div class="edu-header">
+                    <span class="edu-school">福州软件职业技术学院</span>
+                    <span class="edu-time">2024.09 - 至今</span>
+                </div>
+                <div class="edu-major">软件技术专业（专科在读）</div>
+                <div class="edu-courses">主修课程：Web前端开发、Java程序设计、数据库应用基础、计算机网络技术、UI设计基础、软件测试基础</div>
+            </div>
+            <div class="education-item">
+                <div class="edu-header">
+                    <span class="edu-school">福建省泉州市第一中学</span>
+                    <span class="edu-time">2021.09 - 2024.06</span>
+                </div>
+                <div class="edu-major">理科</div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>💼 项目经历</h2>
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">🎮 迷宫冒险 <span class="project-badge">本项目</span></div>
+                    <span class="project-meta">2025.06</span>
+                </div>
+                <div class="project-desc">基于 HTML5 Canvas 的网页迷宫冒险游戏，为《项目实训》课程开发。使用递归回溯算法生成随机迷宫，支持键盘与触屏操作。</div>
+                <div class="project-features">
+                    <span class="feature-tag">多关卡系统</span>
+                    <span class="feature-tag">排行榜</span>
+                    <span class="feature-tag">成就系统</span>
+                    <span class="feature-tag">分享功能</span>
+                    <span class="feature-tag">LocalStorage存储</span>
+                </div>
+                <div class="project-meta">
+                    <span>技术栈：HTML5 Canvas, JavaScript, CSS3</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">📝 个人博客系统</div>
+                    <span class="project-meta">2025.03 - 2025.05</span>
+                </div>
+                <div class="project-desc">基于 Vue3 + Vite 搭建的个人博客项目，实现文章列表、文章详情、分类标签、评论留言等模块。</div>
+                <div class="project-features">
+                    <span class="feature-tag">文章管理</span>
+                    <span class="feature-tag">分类标签</span>
+                    <span class="feature-tag">评论系统</span>
+                    <span class="feature-tag">主题切换</span>
+                    <span class="feature-tag">响应式布局</span>
+                </div>
+                <div class="project-meta">
+                    <span>技术栈：Vue3, Vite, Vue-Router, Pinia, Element Plus</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">🏪 校园二手交易平台</div>
+                    <span class="project-meta">2024.11 - 2025.01</span>
+                </div>
+                <div class="project-desc">面向在校大学生的二手物品交易平台课程设计项目，负责前端页面开发与接口联调。</div>
+                <div class="project-features">
+                    <span class="feature-tag">商品发布</span>
+                    <span class="feature-tag">分类搜索</span>
+                    <span class="feature-tag">用户中心</span>
+                    <span class="feature-tag">交易留言</span>
+                </div>
+                <div class="project-meta">
+                    <span>技术栈：HTML5, CSS3, JavaScript, Axios</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>🏫 校园经历</h2>
+            <div class="campus-item">
+                <div class="campus-header">
+                    <div>
+                        <span class="campus-name">校团委新媒体中心</span>
+                        <span class="campus-role">宣传部干事</span>
+                    </div>
+                    <span class="campus-time">2024.09 - 至今</span>
+                </div>
+                <div class="campus-desc">负责学校官方公众号推文排版与配图设计，累计发布推文20余篇，单篇最高阅读量3000+；参与校园活动海报设计，熟练使用Photoshop、Canva等设计工具；协助运营学校抖音账号，参与视频剪辑与文案撰写。</div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>🏆 荣誉奖项</h2>
+            <ul class="awards-list">
+                <li>2024-2025学年第一学期 校级二等奖学金</li>
+                <li>2024年校级"网页设计大赛"三等奖</li>
+                <li>全国计算机等级考试 一级证书</li>
+                <li>大学英语四级（CET-4）</li>
+            </ul>
+        </div>
+
+        <div class="section-card">
+            <h2>🎮 关于本游戏</h2>
+            <div class="game-showcase">
+                <div class="game-icon">🏰</div>
+                <h3>迷宫冒险 - Maze Adventure</h3>
+                <p>这是一款为《项目实训》课程开发的网页迷宫游戏。<br>使用递归回溯算法生成随机迷宫，支持多关卡挑战、排行榜、成就系统。</p>
+                <div class="game-features">
+                    <span class="game-feature">🎯 5关递进难度</span>
+                    <span class="game-feature">🏆 成就系统</span>
+                    <span class="game-feature">📊 排行榜</span>
+                    <span class="game-feature">🔗 分享功能</span>
+                </div>
+                <a href="index.html" class="btn btn-primary">🎮 开始游戏</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迷宫冒险 - Maze Adventure</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 加载画面 -->
+    <div id="loading-screen" class="screen active">
+        <div class="loader-container">
+            <div class="maze-loader">
+                <div class="loader-wall"></div>
+                <div class="loader-wall"></div>
+                <div class="loader-wall"></div>
+                <div class="loader-player"></div>
+            </div>
+            <h2>迷宫冒险</h2>
+            <p class="loading-text">正在生成迷宫...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 封面页 -->
+    <div id="cover-screen" class="screen">
+        <div class="cover-content">
+            <h1 class="game-title">迷宫冒险</h1>
+            <p class="game-subtitle">Maze Adventure</p>
+            <div class="cover-menu">
+                <button class="btn btn-primary" id="btn-start">开始游戏</button>
+                <button class="btn btn-secondary" id="btn-leaderboard">排行榜</button>
+                <button class="btn btn-secondary" id="btn-achievements">成就</button>
+                <button class="btn btn-secondary" id="btn-about">关于我</button>
+            </div>
+            <p class="cover-tip">按 WASD 或方向键移动</p>
+        </div>
+    </div>
+
+    <!-- 操作引导 -->
+    <div id="tutorial-screen" class="screen">
+        <div class="modal-overlay">
+            <div class="modal-box">
+                <h2>游戏说明</h2>
+                <div class="tutorial-content">
+                    <div class="tutorial-item">
+                        <span class="key">W A S D</span>
+                        <span>或</span>
+                        <span class="key">↑ ↓ ← →</span>
+                        <span>控制角色移动</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="icon">🏁</span>
+                        <span>找到出口即可过关</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="icon">⏱️</span>
+                        <span>用时越短，得分越高</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="icon">⭐</span>
+                        <span>收集星星可获得额外分数</span>
+                    </div>
+                </div>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="skip-tutorial"> 下次不再显示
+                </label>
+                <button class="btn btn-primary" id="btn-tutorial-ok">知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏主界面 -->
+    <div id="game-screen" class="screen">
+        <div class="game-ui">
+            <div class="game-nav">
+                <div class="nav-left">
+                    <button class="btn-icon" id="btn-pause" title="暂停">⏸️</button>
+                    <span class="level-info">关卡 <span id="level-num">1</span></span>
+                </div>
+                <div class="nav-center">
+                    <span class="timer">⏱️ <span id="timer">00:00</span></span>
+                    <span class="steps">👣 <span id="steps">0</span></span>
+                    <span class="score">⭐ <span id="score">0</span></span>
+                </div>
+                <div class="nav-right">
+                    <button class="btn-icon" id="btn-restart-level" title="重开本关">🔄</button>
+                    <button class="btn-icon" id="btn-back-menu" title="返回菜单">🏠</button>
+                </div>
+            </div>
+            <div class="game-main">
+                <div class="game-canvas-wrapper">
+                    <canvas id="game-canvas"></canvas>
+                </div>
+                <!-- 简历侧边栏 -->
+                <div class="resume-sidebar" id="resume-sidebar">
+                    <div class="resume-toggle" id="resume-toggle">📋</div>
+                    <div class="resume-content">
+                        <div class="resume-header">
+                            <div class="resume-avatar">👩‍💻</div>
+                            <h3>蔡雅婷</h3>
+                            <p class="resume-subtitle">前端开发实习生</p>
+                        </div>
+                        <div class="resume-section">
+                            <h4>📋 个人信息</h4>
+                            <div class="resume-info">
+                                <span>🎓 软件技术专业</span>
+                                <span>🏫 福州软件职业技术学院</span>
+                                <span>📍 福建福州</span>
+                            </div>
+                        </div>
+                        <div class="resume-section">
+                            <h4>🛠️ 技能标签</h4>
+                            <div class="resume-skills">
+                                <span class="resume-skill">HTML5</span>
+                                <span class="resume-skill">CSS3</span>
+                                <span class="resume-skill">JavaScript</span>
+                                <span class="resume-skill">Vue3</span>
+                                <span class="resume-skill">Git</span>
+                            </div>
+                        </div>
+                        <div class="resume-section">
+                            <h4>📞 联系方式</h4>
+                            <div class="resume-contact">
+                                <a href="tel:18750525007">📱 18750525007</a>
+                                <a href="mailto:2119369625@qq.com">✉️ 2119369625@qq.com</a>
+                                <a href="https://github.com/yating-cai" target="_blank">🐙 GitHub</a>
+                            </div>
+                        </div>
+                        <div class="resume-footer">
+                            <a href="about.html" target="_blank" class="resume-link">查看完整简历 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 暂停菜单 -->
+    <div id="pause-screen" class="screen">
+        <div class="modal-overlay">
+            <div class="modal-box">
+                <h2>游戏暂停</h2>
+                <div class="pause-menu">
+                    <button class="btn btn-primary" id="btn-resume">继续游戏</button>
+                    <button class="btn btn-secondary" id="btn-pause-restart">重新开始</button>
+                    <button class="btn btn-secondary" id="btn-pause-menu">返回菜单</button>
+                    <button class="btn btn-secondary" id="btn-pause-about">关于我</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 过关画面 -->
+    <div id="level-complete-screen" class="screen">
+        <div class="modal-overlay">
+            <div class="modal-box level-complete-box">
+                <div class="complete-animation">🎉</div>
+                <h2>关卡完成！</h2>
+                <div class="level-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">用时</span>
+                        <span class="stat-value" id="complete-time">00:00</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">步数</span>
+                        <span class="stat-value" id="complete-steps">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">星星</span>
+                        <span class="stat-value" id="complete-stars">0/3</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">得分</span>
+                        <span class="stat-value" id="complete-score">0</span>
+                    </div>
+                </div>
+                <div class="achievements-popup" id="achievements-popup"></div>
+                <div class="complete-actions">
+                    <button class="btn btn-primary" id="btn-next-level">下一关</button>
+                    <button class="btn btn-secondary" id="btn-share">分享成绩</button>
+                    <button class="btn btn-secondary" id="btn-complete-menu">返回菜单</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 排行榜 -->
+    <div id="leaderboard-screen" class="screen">
+        <div class="modal-overlay">
+            <div class="modal-box leaderboard-box">
+                <h2>🏆 排行榜</h2>
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" data-tab="time">最快通关</button>
+                    <button class="tab-btn" data-tab="score">最高得分</button>
+                </div>
+                <div class="leaderboard-list" id="leaderboard-list"></div>
+                <div class="leaderboard-actions">
+                    <button class="btn btn-danger" id="btn-clear-leaderboard">清空记录</button>
+                    <button class="btn btn-secondary" id="btn-leaderboard-back">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成就系统 -->
+    <div id="achievements-screen" class="screen">
+        <div class="modal-overlay">
+            <div class="modal-box achievements-box">
+                <h2>🏅 成就</h2>
+                <div class="achievements-list" id="achievements-list"></div>
+                <button class="btn btn-secondary" id="btn-achievements-back">返回</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分享弹窗 -->
+    <div id="share-screen" class="screen">
+        <div class="modal-overlay">
+            <div class="modal-box share-box">
+                <h2>分享成绩</h2>
+                <textarea id="share-text" readonly></textarea>
+                <div class="share-actions">
+                    <button class="btn btn-primary" id="btn-copy-share">复制文本</button>
+                    <button class="btn btn-secondary" id="btn-close-share">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/maze.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
