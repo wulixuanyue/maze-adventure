@@ -287,7 +287,7 @@ class MazeGame {
         
         const ctx = this.offscreenCtx;
         
-        // 先填充整个画布为墙壁颜色（深色，不可进入）
+        // 先填充整个画布为墙壁颜色（深色背景，不可进入）
         ctx.fillStyle = '#0f172a';
         ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
@@ -295,16 +295,16 @@ class MazeGame {
         const reachable = this.mazeGen.getReachableCells(maze.cells, maze.width, maze.height);
         
         // 绘制通道（浅色，可进入）
-        ctx.fillStyle = '#475569'; // 通道颜色比墙壁浅
+        ctx.fillStyle = '#374151'; // 通道颜色
         for (const pos of reachable) {
             const px = pos.x * cs;
             const py = pos.y * cs;
             ctx.fillRect(px, py, cs, cs);
         }
         
-        // 绘制墙壁边框（粗线条，不可进入）
-        ctx.strokeStyle = '#1e293b';
-        ctx.lineWidth = Math.max(3, Math.floor(cs * 0.2)); // 根据格子大小动态调整
+        // 绘制墙壁（深色粗边框，不可进入）
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = Math.max(4, Math.floor(cs * 0.25)); // 粗线条表示墙壁
         ctx.lineCap = 'square';
         
         // 只在可达区域周围绘制墙壁边框
@@ -336,9 +336,9 @@ class MazeGame {
             ctx.stroke();
         }
         
-        // 添加通道网格线（细线条）
-        ctx.strokeStyle = '#64748b';
-        ctx.lineWidth = 1;
+        // 添加通道网格线（细线条，可进入区域的分隔）
+        ctx.strokeStyle = '#4b5563';
+        ctx.lineWidth = 1; // 细线条表示通道分隔
         for (const pos of reachable) {
             const px = pos.x * cs;
             const py = pos.y * cs;
