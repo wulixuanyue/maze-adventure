@@ -7,6 +7,8 @@ class SimpleGame {
 
     init() {
         console.log('init called');
+        // 直接显示封面页面，跳过加载
+        this.showScreen('cover');
         this.setupEventListeners();
     }
 
