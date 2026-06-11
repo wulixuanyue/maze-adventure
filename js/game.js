@@ -183,14 +183,12 @@ class MazeGame {
 
     // 开始游戏
     startGame() {
+        console.log('startGame called');
         this.level = 1;
         this.totalSteps = 0;
 
-        if (!this.settings.skipTutorial) {
-            this.showScreen('tutorial');
-        } else {
-            this.loadLevel();
-        }
+        // 直接进入游戏，跳过教程
+        this.loadLevel();
     }
 
     // 关闭教程
