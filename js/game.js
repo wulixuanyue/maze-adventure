@@ -198,7 +198,12 @@ class MazeGame {
         this.totalSteps = 0;
 
         // 直接进入游戏，跳过教程
-        this.loadLevel();
+        try {
+            this.loadLevel();
+        } catch (e) {
+            console.error('Error loading level:', e);
+            alert('游戏加载出错: ' + e.message);
+        }
     }
 
     // 关闭教程

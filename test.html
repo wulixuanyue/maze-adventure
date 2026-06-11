@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试页面</title>
+    <style>
+        body {
+            background: #1e293b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            background: #3b82f6;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>测试页面</h1>
+    <button class="btn" id="btn-test">点击测试</button>
+    <p id="output"></p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded');
+            
+            const btn = document.getElementById('btn-test');
+            const output = document.getElementById('output');
+            
+            btn.addEventListener('click', () => {
+                console.log('Button clicked');
+                output.textContent = '按钮点击成功！';
+                alert('测试成功！');
+            });
+        });
+    </script>
+</body>
+</html>
